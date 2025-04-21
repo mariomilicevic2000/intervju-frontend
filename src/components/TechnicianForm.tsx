@@ -102,6 +102,7 @@ export default function TechnicianForm() {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
+  // dinamicki generirana schema
   const schema = buildTechnicianSchema(groupManagers);
 
   const { control, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm({
@@ -109,6 +110,7 @@ export default function TechnicianForm() {
     defaultValues: defaultTechnicianValues
   });
 
+  // dohvacanje managera da bi se moglo populirati dropdown za postojece grupe
   useEffect(() => {
     fetch('http://localhost:8080/api/admin/groupmanagers')
       .then(res => res.json())
@@ -118,6 +120,7 @@ export default function TechnicianForm() {
 
   const groupId = Number(watch("groupId"));
 
+  // logika koja na temelju izabrane grupe mijenja readonly polje za managera
   useEffect(() => {
     const match = groupManagers.find((gm) => gm.groupId === groupId);
     // console.log("Selected groupId:", groupId, "-> Found manager:", match?.managerName);
@@ -126,8 +129,9 @@ export default function TechnicianForm() {
     }
   }, [groupId, groupManagers, setValue]);
 
-
+  // slanje tehnicara preko API endpointa i logika za pokazatelj statusa submita
   const onSubmit = async (data: any) => {
+    // manipulacija response bodya da bi se groupId poslao kao strani kljuc
     const updatedData = {
       ...data,
       group: { groupId: Number(data.groupId) }, // Wrap groupId in an object
@@ -364,6 +368,7 @@ export default function TechnicianForm() {
       </div>
 
 
+      {/* kontrole forme i pokazatelji statusa submita */}
       <button type='submit' className='btn btn-primary'>Spremi tehničara</button>
       <button type='button' className='btn btn-secondary ms-3' onClick={handleReset}>Resetiraj formu</button>
       <div className="d-inline-block ms-3">

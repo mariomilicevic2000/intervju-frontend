@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// model podataka za tehničara
 type Technician = {
   kpNumber: number;
   firstName: string;
@@ -16,6 +17,7 @@ type Technician = {
   workCity: string;
 };
 
+// niz stupaca za tablicu
 const headers = [
   "KP broj",
   "Ime",
@@ -26,6 +28,7 @@ const headers = [
   "Adresa rada",
 ];
 
+// vrijednosti retka tablice
 const getTechValues = (tech: any) => [
   tech.kpNumber || "",
   tech.firstName || "",
@@ -42,6 +45,7 @@ const TechnicianList = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
+  // paginacija
   useEffect(() => {
     const fetchTechnicians = async () => {
       try {
@@ -60,6 +64,8 @@ const TechnicianList = () => {
     fetchTechnicians();
   }, [page]);
 
+
+  // logika za navigaciju paginacije
   const handleNext = () => {
     if (page < totalPages - 1) setPage(page + 1);
   };
@@ -70,7 +76,7 @@ const TechnicianList = () => {
 
   if (loading) return <p>Učitavanje tehničara...</p>;
 
-  // Ensure the table always has 5 rows
+  // tablica uvijek ima nizova koliko ima i stranica, smanjenje layout shifta
   const techniciansWithEmptyRows = [
     ...technicians,
     ...new Array(5 - technicians.length).fill({
@@ -89,6 +95,7 @@ const TechnicianList = () => {
 
   return (
     <div className="p-4">
+      {/* tablica generirana nizovima definiranima gore */}
       <h2 className="text-xl font-bold mb-4">Popis tehničara</h2>
       <table className="w-full border-collapse border border-gray-300">
         <thead className="bg-gray-100">
@@ -113,6 +120,7 @@ const TechnicianList = () => {
         </tbody>
       </table>
 
+      {/* Kontrole za paginaciju */}
       <div className="d-flex justify-content-between align-items-center mt-3">
         <button className="btn btn-secondary" disabled={page === 0} onClick={handlePrev}>Prethodna</button>
         <span>Stranica {page + 1} od {totalPages}</span>
