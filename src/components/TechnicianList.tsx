@@ -16,6 +16,26 @@ type Technician = {
   workCity: string;
 };
 
+const headers = [
+  "KP broj",
+  "Ime",
+  "Prezime",
+  "Grupa",
+  "Mobitel",
+  "Email",
+  "Adresa rada",
+];
+
+const getTechValues = (tech: any) => [
+  tech.kpNumber || "",
+  tech.firstName || "",
+  tech.lastName || "",
+  tech.group?.managerName || "",
+  tech.contactMobile || "",
+  tech.contactEmail || "",
+  `${tech.workStreetName || ""} ${tech.workStreetNumber || ""}, ${tech.workPostcode || ""} ${tech.workCity || ""}`,
+];
+
 const TechnicianList = () => {
   const [technicians, setTechnicians] = useState<Technician[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,27 +93,21 @@ const TechnicianList = () => {
       <table className="w-full border-collapse border border-gray-300">
         <thead className="bg-gray-100">
           <tr>
-            <th className="border px-2 py-1">KP broj</th>
-            <th className="border px-2 py-1">Ime</th>
-            <th className="border px-2 py-1">Prezime</th>
-            <th className="border px-2 py-1">Grupa</th>
-            <th className="border px-2 py-1">Mobitel</th>
-            <th className="border px-2 py-1">Email</th>
-            <th className="border px-2 py-1">Adresa rada</th>
+            {headers.map((header) => (
+              <th key={header} className="border px-2 py-1">
+                {header}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {techniciansWithEmptyRows.map((tech, index) => (
             <tr key={tech.kpNumber || `empty-row-${index}`}>
-              <td className="border px-2 py-1">{tech.kpNumber || ""}</td>
-              <td className="border px-2 py-1">{tech.firstName || ""}</td>
-              <td className="border px-2 py-1">{tech.lastName || ""}</td>
-              <td className="border px-2 py-1">{tech.group.managerName || ""}</td>
-              <td className="border px-2 py-1">{tech.contactMobile || ""}</td>
-              <td className="border px-2 py-1">{tech.contactEmail || ""}</td>
-              <td className="border px-2 py-1">
-                {tech.workStreetName || ""} {tech.workStreetNumber || ""}, {tech.workPostcode || ""} {tech.workCity || ""}
-              </td>
+              {getTechValues(tech).map((val, i) => (
+                <td key={i} className="border px-2 py-1">
+                  {val}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
