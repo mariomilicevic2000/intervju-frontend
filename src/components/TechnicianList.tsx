@@ -118,12 +118,12 @@ const TechnicianList = () => {
   if (loading) return <p>Učitavanje tehničara...</p>;
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ minHeight: '600px' }}>
       {/* tablica generirana nizovima definiranima gore */}
       <h2 className="text-xl font-bold mb-4">Popis tehničara</h2>
-      <div className="table-responsive">
-        <table className="min-w-full border-collapse border border-gray-300">
-          <thead className="bg-gray-100">
+      <div className="table-responsive" style={{ minHeight: '600px' }}>
+        <table className="table table-striped table-hover">
+          <thead className="table-dark">
             <tr>
               {headers.map((header) => (
                 <th key={header} className="border px-2 py-1">
@@ -132,7 +132,7 @@ const TechnicianList = () => {
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="table-group-divider">
             {techniciansWithEmptyRows.map((tech, index) => (
               <tr key={tech.kpNumber || `empty-row-${index}`}>
                 {getTechValues(tech).map((val, i) => (

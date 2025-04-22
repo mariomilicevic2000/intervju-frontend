@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FaSpinner, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
+import '../App.css';
+
 
 // Regex koji matcha hrvatske mobilne brojeve: pocinje sa pozivnim za drzavu ili lokaknim prefiksom (0), validira prefikse operatera,
 // validira broj znamenaka (6 ili 7) opcionalno odvojenih spaceovima ili crticama
