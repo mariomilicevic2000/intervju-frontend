@@ -118,48 +118,49 @@ const TechnicianList = () => {
   if (loading) return <p>Učitavanje tehničara...</p>;
 
   return (
-    <div className="p-4">
+    <div className="container-fluid">
       {/* tablica generirana nizovima definiranima gore */}
       <h2 className="text-xl font-bold mb-4">Popis tehničara</h2>
-      <table className="w-full border-collapse border border-gray-300">
-        <thead className="bg-gray-100">
-          <tr>
-            {headers.map((header) => (
-              <th key={header} className="border px-2 py-1">
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {techniciansWithEmptyRows.map((tech, index) => (
-            <tr key={tech.kpNumber || `empty-row-${index}`}>
-              {getTechValues(tech).map((val, i) => (
-                <td key={i} className="border px-2 py-1">
-                  {val}
-                </td>
+      <div className="table-responsive">
+        <table className="min-w-full border-collapse border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              {headers.map((header) => (
+                <th key={header} className="border px-2 py-1">
+                  {header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            {techniciansWithEmptyRows.map((tech, index) => (
+              <tr key={tech.kpNumber || `empty-row-${index}`}>
+                {getTechValues(tech).map((val, i) => (
+                  <td key={i} className="border px-2 py-1">
+                    {val}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* Kontrole za paginaciju */}
       <div className="d-flex justify-content-between align-items-center mt-3">
         <button className="btn btn-secondary" disabled={page === 0} onClick={handlePrev}>Prethodna</button>
-        <span>Stranica </span>
-        <input
-          type="number"
-          min={1}
-          max={totalPages}
-          value={inputValue}
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          onKeyDown={handleKeyDown}
-          className="form-control d-inline-block"
-          style={{ width: '60px', display: 'inline-block', textAlign: 'center' }}
-        />
-        <span> od {totalPages}</span>
+        <span>Stranica
+          <input
+            type="number"
+            min={1}
+            max={totalPages}
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            onKeyDown={handleKeyDown}
+            className="form-control d-inline-block"
+            style={{ width: '60px', display: 'inline-block', textAlign: 'center' }}
+          />
+          od {totalPages}</span>
         <button className="btn btn-secondary" disabled={page === totalPages - 1} onClick={handleNext}>Sljedeća</button>
       </div>
     </div>

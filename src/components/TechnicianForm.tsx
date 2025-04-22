@@ -179,7 +179,7 @@ export default function TechnicianForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='container mt-4'>
+    <form onSubmit={handleSubmit(onSubmit)} className='container-fluid mt-4'>
       <h1 className='mb-3'>Forma za unos novog tehnicara</h1>
       <div className="mb-3">
         <label htmlFor="kpNumber" className="form-label">KP broj</label>
@@ -192,7 +192,7 @@ export default function TechnicianForm() {
       </div>
 
       <div className="row">
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="fullName" className="form-label">Ime</label>
           <Controller
             name="firstName"
@@ -202,7 +202,7 @@ export default function TechnicianForm() {
           {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
         </div>
 
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="lastName" className="form-label">Prezime</label>
           <Controller
             name="lastName"
@@ -215,7 +215,7 @@ export default function TechnicianForm() {
 
 
       <div className='row'>
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="groupId" className="form-label">MFG Grupa</label>
           <Controller
             name="groupId"
@@ -237,7 +237,7 @@ export default function TechnicianForm() {
           />
           {errors.groupId && <p className="text-danger">{errors.groupId.message}</p>}
         </div>
-        <div className='col-md-6 mb-3'>
+        <div className='col-12 col-md-6 mb-3'>
           <label htmlFor="manager" className="form-label">MFG Voditelj</label>
           <Controller
             key={groupId}
@@ -258,7 +258,7 @@ export default function TechnicianForm() {
       </div>
 
       <div className="row">
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="contactMobile" className="form-label">Kontakt mobitel</label>
           <Controller
             name="contactMobile"
@@ -275,7 +275,7 @@ export default function TechnicianForm() {
           {errors.contactMobile && <p className="text-danger">{errors.contactMobile.message}</p>}
         </div>
 
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="contactEmail" className="form-label">Kontakt e-mail</label>
           <Controller
             name="contactEmail"
@@ -295,7 +295,7 @@ export default function TechnicianForm() {
 
       <h5 className="mt-4">Adresa rada</h5>
       <div className="row">
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="workStreetName" className="form-label">Ulica</label>
           <Controller
             name="workStreetName"
@@ -312,7 +312,7 @@ export default function TechnicianForm() {
           {errors.workStreetName && <p className="text-danger">{errors.workStreetName.message}</p>}
         </div>
 
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="workStreetNumber" className="form-label">Kućni broj</label>
           <Controller
             name="workStreetNumber"
@@ -331,7 +331,7 @@ export default function TechnicianForm() {
       </div>
 
       <div className="row">
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="workPostcode" className="form-label">Poštanski broj</label>
           <Controller
             name="workPostcode"
@@ -348,7 +348,7 @@ export default function TechnicianForm() {
           {errors.workPostcode && <p className="text-danger">{errors.workPostcode.message}</p>}
         </div>
 
-        <div className="col-md-6 mb-3">
+        <div className="col-12 col-md-6 mb-3">
           <label htmlFor="workCity" className="form-label">Grad</label>
           <Controller
             name="workCity"
