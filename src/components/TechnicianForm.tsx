@@ -116,7 +116,7 @@ export default function TechnicianForm() {
       .then(res => res.json())
       .then(data => setGroupManagers(data))
       .catch(err => console.error("Dohvaćanje voditelja neuspješno", err))
-  }, []);
+  }, [watch]);
 
   const groupId = Number(watch("groupId"));
 
@@ -134,9 +134,9 @@ export default function TechnicianForm() {
     // manipulacija response bodya da bi se groupId poslao kao strani kljuc
     const updatedData = {
       ...data,
-      group: { groupId: Number(data.groupId) }, // Wrap groupId in an object
+      group: { groupId: Number(data.groupId) },
     };
-    delete updatedData.groupId; // Remove the flat groupId if present
+    delete updatedData.groupId;
 
     setIsSubmitting(true);
     setIsSuccess(false);
@@ -226,7 +226,6 @@ export default function TechnicianForm() {
                 className="form-select"
                 id="groupId"
                 onChange={e => field.onChange(Number(e.target.value))}
-              // React Hook Form will handle the value as a number automatically
               >
                 {groupManagers.map((gm) => (
                   <option key={gm.groupId} value={gm.groupId.toString()}>
@@ -372,9 +371,24 @@ export default function TechnicianForm() {
       <button type='submit' className='btn btn-primary'>Spremi tehničara</button>
       <button type='button' className='btn btn-secondary ms-3' onClick={handleReset}>Resetiraj formu</button>
       <div className="d-inline-block ms-3">
-        {isSubmitting && <FaSpinner className="text-primary spinner-border spinner-border-sm" />}
-        {isSuccess && <FaCheckCircle className="text-success" />}
-        {isError && <FaTimesCircle className="text-danger" />}
+        {isSubmitting && (
+          <>
+            <FaSpinner className="text-primary spinner-border spinner-border-sm" />
+            <span className="text-primary ms-1">Spremanje u tijeku...</span>
+          </>
+        )}
+        {isSuccess && (
+          <>
+            <FaCheckCircle className="text-success" />
+            <span className="text-success ms-1">Uspješno spremljeno</span>
+          </>
+        )}
+        {isError && (
+          <>
+            <FaTimesCircle className="text-danger" />
+            <span className="text-danger ms-1">Došlo je do pogreške</span>
+          </>
+        )}
       </div>
     </form >
   );

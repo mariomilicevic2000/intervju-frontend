@@ -74,7 +74,6 @@ const TechnicianList = () => {
     if (page > 0) setPage(page - 1);
   };
 
-  if (loading) return <p>Učitavanje tehničara...</p>;
 
   // tablica uvijek ima nizova koliko ima i stranica, smanjenje layout shifta
   const techniciansWithEmptyRows = [
@@ -92,6 +91,8 @@ const TechnicianList = () => {
       workCity: "",
     }),
   ];
+
+  if (loading) return <p>Učitavanje tehničara...</p>;
 
   return (
     <div className="p-4">
