@@ -102,13 +102,18 @@ Budući da se radi o komponenti koja samo ispisuje već postojeće podatke, nije
 - Kao state varijable definirane su sljedeće:
   - Tehničari, niz, spremaju se podaci iz fetch odgovora
   - loading state za slučaj kada tehničari još nisu dohvaćeni
-  - page i totalPages za paginaciju
+  - page, totalPages i inputValue za paginaciju
 - useEffect izvršava funkciju fetchTechnicians koja dobavlja paginiranu listu tehničara:
   - šalje se GET zahtjev na /api/admin/technicians uz dodatne parametre: page (dinamički određena trenutna stranica paginacije) i size (broj redaka iz tablice baze podataka tj. veličina stranice)
   - dohvaćeni podaci spremaju se u state varijable
   - useEffect se pokreće na mountu i svaki put kada se varijabla page promijeni
 - handleNext i handlePrev funkcije mijenjaju vrijednost page state varijable, šalju se kao argumenti event listenera na kontrolne gumbe paginacije
+- useEffect sinkronizira prikaz trenutne stranice bilo da se navigacija odvija gumbima ili input poljem, aktivira se svaki put kada se promijeni iznos page state varijable
+- handleInputValue stavlja iznos inputValue na upisanu vrijednost
+- handleInputBlur provjerava je li broj ispravan i ako je, mijenja stranicu, ako nije, vraća vrijednost stranice na postojeću, aktivira se kada se dogodi blur event nad poljem
+- handleKeyDown osigurava da se dogodi blur event nad inputom ako korisnik klikne Enter
 - Ukoliko tehničari još nisu dohvaćeni, prikazuje se loading state poruka
 - Tablica se uvijek inicijalizira kao pet redaka da bi se smanjio layout shift: techniciansWithEmptyRows prazne retke ukoliko zadnja stranica paginacije ima manje od pet elemenata za prikaz, u loading stateu prikazuje oblik tablice koji se može očekivati kada se podaci učitaju
 - tablica se sastoji od mapiranih globalno definiranih nizova koristeći nativni <table> modul, sa svakim retkom stiliziranim
 - Ispod tablice nalaze se kontrole za paginaciju i prikaz trenutne stranice od ukupnih. Na kontrolama su event listeneri koji kontroliraju koja stranica paginacije se trenutno prikazuje.
+- Također, osim gumbova, moguće je sam upisati broj stranice na koju korisnik želi navigirati, budući da je indikator trenutne stranice ujedno i input polje za upis broja
