@@ -44,7 +44,7 @@ const TechnicianList = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const [inputValue, setInputValue] = useState(page+1);
+  const [inputValue, setInputValue] = useState(page + 1);
 
   // paginacija
   useEffect(() => {
@@ -66,16 +66,6 @@ const TechnicianList = () => {
   }, [page]);
 
 
-  // logika za navigaciju paginacije
-  const handleNext = () => {
-    if (page < totalPages - 1) setPage(page + 1);
-  };
-
-  const handlePrev = () => {
-    if (page > 0) setPage(page - 1);
-  };
-
-
   // tablica uvijek ima nizova koliko ima i stranica, smanjenje layout shifta
   const techniciansWithEmptyRows = [
     ...technicians,
@@ -93,11 +83,20 @@ const TechnicianList = () => {
     }),
   ];
 
+  // logika za navigaciju paginacije
+  const handleNext = () => {
+    if (page < totalPages - 1) setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    if (page > 0) setPage(page - 1);
+  };
+
   useEffect(() => {
     setInputValue(page + 1);
   }, [page]);
 
-  const handleInputChange = (e : any) => {
+  const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
   };
 
@@ -110,7 +109,7 @@ const TechnicianList = () => {
     }
   };
 
-  const handleKeyDown = (e : any) => {
+  const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.target.blur();
     }
