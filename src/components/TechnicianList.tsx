@@ -44,6 +44,7 @@ const TechnicianList = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+  const [inputValue, setInputValue] = useState(page+1);
 
   // paginacija
   useEffect(() => {
@@ -92,6 +93,29 @@ const TechnicianList = () => {
     }),
   ];
 
+  useEffect(() => {
+    setInputValue(page + 1);
+  }, [page]);
+
+  const handleInputChange = (e : any) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputBlur = () => {
+    const newPage = Number(inputValue) - 1;
+    if (!isNaN(newPage) && newPage >= 0 && newPage < totalPages) {
+      setPage(newPage);
+    } else {
+      setInputValue(page + 1);
+    }
+  };
+
+  const handleKeyDown = (e : any) => {
+    if (e.key === 'Enter') {
+      e.target.blur();
+    }
+  };
+
   if (loading) return <p>Učitavanje tehničara...</p>;
 
   return (
@@ -124,7 +148,19 @@ const TechnicianList = () => {
       {/* Kontrole za paginaciju */}
       <div className="d-flex justify-content-between align-items-center mt-3">
         <button className="btn btn-secondary" disabled={page === 0} onClick={handlePrev}>Prethodna</button>
-        <span>Stranica {page + 1} od {totalPages}</span>
+        <span>Stranica </span>
+        <input
+          type="number"
+          min={1}
+          max={totalPages}
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+          onKeyDown={handleKeyDown}
+          className="form-control d-inline-block"
+          style={{ width: '60px', display: 'inline-block', textAlign: 'center' }}
+        />
+        <span> od {totalPages}</span>
         <button className="btn btn-secondary" disabled={page === totalPages - 1} onClick={handleNext}>Sljedeća</button>
       </div>
     </div>
