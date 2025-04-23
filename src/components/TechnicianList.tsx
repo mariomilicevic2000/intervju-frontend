@@ -44,16 +44,17 @@ const getTechValues = (tech: any) => [
 
 const TechnicianList = () => {
   const [technicians, setTechnicians] = useState<Technician[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const [inputValue, setInputValue] = useState(page + 1);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(0);
+  const [size, setSize] = useState<number>(5);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [inputValue, setInputValue] = useState<number>(page + 1);
 
   // paginacija
   useEffect(() => {
     const fetchTechnicians = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/admin/technicians?page=${page}&size=5`);
+        const response = await fetch(`http://localhost:8080/api/admin/technicians?page=${page}&size=${size}`);
         if (!response.ok) throw new Error("Failed to fetch technicians");
         const data = await response.json();
         setTechnicians(data.content);
@@ -65,13 +66,13 @@ const TechnicianList = () => {
     };
 
     fetchTechnicians();
-  }, [page]);
+  }, [page, size]);
 
 
   // tablica uvijek ima nizova koliko ima i stranica, smanjenje layout shifta
   const techniciansWithEmptyRows = [
     ...technicians,
-    ...new Array(5 - technicians.length).fill({
+    ...new Array(size - technicians.length).fill({
       kpNumber: null,
       firstName: "",
       lastName: "",
@@ -117,7 +118,7 @@ const TechnicianList = () => {
     }
   };
 
-  if (loading) return <TechnicianListPlaceholder/>;
+  if (loading) return <TechnicianListPlaceholder />;
 
   return (
     <div className="container-fluid" style={{ minHeight: '600px' }}>
