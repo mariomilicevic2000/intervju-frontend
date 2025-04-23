@@ -46,9 +46,9 @@ const TechnicianList = () => {
   const [technicians, setTechnicians] = useState<Technician[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(5);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [inputValue, setInputValue] = useState<number>(page + 1);
+  const size : number = 5;
 
   // paginacija
   useEffect(() => {
