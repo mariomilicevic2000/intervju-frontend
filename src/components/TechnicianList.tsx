@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import TechnicianListPlaceholder from "./TechnicianListPlaceholder";
 
 // model podataka za tehničara
 type Technician = {
@@ -55,10 +56,9 @@ const TechnicianList = () => {
         const data = await response.json();
         setTechnicians(data.content);
         setTotalPages(data.totalPages);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching technicians:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -115,7 +115,7 @@ const TechnicianList = () => {
     }
   };
 
-  if (loading) return <p>Učitavanje tehničara...</p>;
+  if (loading) return <TechnicianListPlaceholder/>;
 
   return (
     <div className="container-fluid" style={{ minHeight: '600px' }}>
@@ -132,7 +132,7 @@ const TechnicianList = () => {
               ))}
             </tr>
           </thead>
-          <tbody className="table-group-divider">
+          <tbody>
             {techniciansWithEmptyRows.map((tech, index) => (
               <tr key={tech.kpNumber || `empty-row-${index}`}>
                 {getTechValues(tech).map((val, i) => (

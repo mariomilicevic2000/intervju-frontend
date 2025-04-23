@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FaSpinner, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import '../App.css';
+import TechnicianFormPlaceholder from './TechnicianFormPlaceholder';
 
 
 // Regex koji matcha hrvatske mobilne brojeve: pocinje sa pozivnim za drzavu ili lokaknim prefiksom (0), validira prefikse operatera,
@@ -176,7 +177,7 @@ export default function TechnicianForm() {
 
   if (groupManagers.length === 0) {
     return (
-      <p>Ucitavanje...</p>
+      <TechnicianFormPlaceholder/>
     )
   }
 
