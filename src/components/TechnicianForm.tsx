@@ -122,6 +122,16 @@ export default function TechnicianForm() {
       .catch(err => console.error("Dohvaćanje voditelja neuspješno", err))
   }, [watch]);
 
+  // resetiranje statea forme i svih state varijabli
+  const handleReset = () => {
+    reset(defaultTechnicianValues);
+    setIsSubmitting(false);
+    setIsSuccess(false);
+    setIsError(false);
+    setKpExists(false);
+  }
+
+
   const groupId = Number(watch("groupId"));
 
   // logika koja na temelju izabrane grupe mijenja readonly polje za managera
@@ -131,14 +141,15 @@ export default function TechnicianForm() {
     if (match) {
       setValue('manager', match.managerName);
     }
-  }, [groupId, groupManagers, setValue]);
+  }, [groupId, groupManagers, handleReset]);
 
+  // funkcija koju aktivira blur event KP broj polja, provjerava postoji li taj KP broj vec u bazi, omogucava ispis errora
   const checkKpNumberExists = async (kpNumber: string) => {
     setKpExists(false);
     try {
       const res = await fetch(`http://localhost:8080/api/admin/technicians/check-kp/${kpNumber}`);
       const exists = await res.json();
-  
+
       if (exists === true) {
         setError("kpNumber", {
           type: "manual",
@@ -189,13 +200,7 @@ export default function TechnicianForm() {
     }
   };
 
-  const handleReset = () => {
-    reset(defaultTechnicianValues);
-    setIsSubmitting(false);
-    setIsSuccess(false);
-  }
-
-
+  // loading state skeleton dok se ne dohvate svi dinamicki podaci (grupe i voditelji)
   if (groupManagers.length === 0) {
     return (
       <TechnicianFormPlaceholder />
@@ -221,7 +226,9 @@ export default function TechnicianForm() {
             />
           )}
         />
-        {errors.kpNumber && <p className="text-danger">{errors.kpNumber.message}</p>}
+        {watch("kpNumber") && errors.kpNumber && (
+          <p className="text-danger mt-1">{errors.kpNumber.message}</p>
+        )}
       </div>
 
       <div className="row">
