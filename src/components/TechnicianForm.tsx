@@ -104,11 +104,12 @@ export default function TechnicianForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [kpExists, setKpExists] = useState<boolean>(false);
 
   // dinamicki generirana schema
   const schema = buildTechnicianSchema(groupManagers);
 
-  const { control, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm({
+  const { control, handleSubmit, formState: { errors }, setError, clearErrors, setValue, watch, reset } = useForm({
     resolver: zodResolver(schema),
     defaultValues: defaultTechnicianValues
   });
@@ -131,6 +132,26 @@ export default function TechnicianForm() {
       setValue('manager', match.managerName);
     }
   }, [groupId, groupManagers, setValue]);
+
+  const checkKpNumberExists = async (kpNumber: string) => {
+    setKpExists(false);
+    try {
+      const res = await fetch(`http://localhost:8080/api/admin/technicians/check-kp/${kpNumber}`);
+      const exists = await res.json();
+  
+      if (exists === true) {
+        setError("kpNumber", {
+          type: "manual",
+          message: "KP broj je već u upotrebi",
+        });
+        setKpExists(true);
+      } else {
+        clearErrors("kpNumber");
+      }
+    } catch (error) {
+      console.error("Greška prilikom provjere KP broja:", error);
+    }
+  };
 
   // slanje tehnicara preko API endpointa i logika za pokazatelj statusa submita
   const onSubmit = async (data: any) => {
@@ -177,7 +198,7 @@ export default function TechnicianForm() {
 
   if (groupManagers.length === 0) {
     return (
-      <TechnicianFormPlaceholder/>
+      <TechnicianFormPlaceholder />
     )
   }
 
@@ -189,7 +210,16 @@ export default function TechnicianForm() {
         <Controller
           name="kpNumber"
           control={control}
-          render={({ field }) => <input {...field} className="form-control" />}
+          render={({ field }) => (
+            <input
+              {...field}
+              className="form-control"
+              onBlur={(e) => {
+                field.onBlur();
+                checkKpNumberExists(e.target.value);
+              }}
+            />
+          )}
         />
         {errors.kpNumber && <p className="text-danger">{errors.kpNumber.message}</p>}
       </div>
@@ -371,7 +401,7 @@ export default function TechnicianForm() {
 
 
       {/* kontrole forme i pokazatelji statusa submita */}
-      <button type='submit' className='btn btn-primary'>Spremi tehničara</button>
+      <button type='submit' className='btn btn-primary' disabled={kpExists}>Spremi tehničara</button>
       <button type='button' className='btn btn-secondary ms-3' onClick={handleReset}>Resetiraj formu</button>
       <div className="d-inline-block ms-3">
         {isSubmitting && (
