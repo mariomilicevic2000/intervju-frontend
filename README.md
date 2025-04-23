@@ -42,6 +42,8 @@ useForm je custom hook koji u sebi sadrži brojne metode i svojstva za baratanje
 - control - kontrolni objekt zadužen za registraciju, validaciju i kontrolu stanja svakog polja forme
 - handleSubmit - funkcija koja prima podatke forme ukoliko je validacija uspješna, kao argument uzima callback funkciju koja se onda brine za daljnju obradu i slanje podataka backendu
 - formState - objekt koji sadržava brojne informacije o stateu svakog polja forme, omogućava opcionalno praćenje interakcije korisnika sa svakim poljem forme, a u našem slučaju praćenje i lakše baratanje errorima validacije
+- setError - manualno postavljanje errora za specifično polje forme, u ovom slučaju korišteno za asinkronu validaciju KP Broja kao indikator da korisnik treba provjeriti u tablici postoji li već taj tehničar u bazi
+- clearErrors - funkcija koja omogućuje programatsko micanje error specifičnog polja forme, upareno sa setError u ovom slučaju
 - setValue - omogućava dinamičko postavljanje vrijednosti registriranog polja, u našem slučaju postavlja vrijednost readonly polja voditelja kada se promijeni vrijednost dropdown polja za unos grupe
 - watch - metoda koja prati specificirano polje, koristi se u useEffectu da bi pokrenuli useEffect koji mapira voditelja u polje kada se promijeni grupa u dropdownu
 - reset - metoda koja resetira state i polja forme nakon nekog uvjeta, u ovom slučaju koristi se da se polja isprazne kada korisnik uspješno unese novog tehničara ili sam resetira formu gumbom.
@@ -72,6 +74,7 @@ U validaciji podataka pomoću Zod-a koristi se nekoliko pomno dizajniranih regul
 - Inicijalizira se useForm state
 - dohvaćaju se podaci o grupama i voditeljima, i na temelju njih se gradi validacijska schema
 - useEffect mijenja vrijednost manager polja kada se promijeni groupId polje
+- funkcija checkKpNumberExists poziva se pri blur eventu polja za unos KP broja. Poziva API endpoint koji u bazi podataka provjerava postoji li već tehničar sa trenutno unesenim KP brojem i pomoću state varijable omogućuje ispis greške ispod forme i onemogućuje korištenje submit gumba.
 - onSubmit je callback funkcija koja se prosljeđuje RHF handleSumbit funkciji kada je validacija uspješna: ažurira JSON polja da bi polje grupe bilo u potrebnom formatu da bi se kasnije u bazi upisalo kao strani ključ i briše se stara implementacija, state za učitavanje se postavi na istinitu vrijednost. Zatim se šalje POST zahtjev na API endpoint za spremanje tehničara s potrebnim headerima i tijelom zathjeva koji sadržava obrađene podatke forme. Ako je forma uspješna, state isSuccess se postavlja na istinitu vrijednost i forma se resetira, ako ne, ispisuje se error i state isError se postavlja na istinitu vrijednost.
 - handleReset funkcija je dana kao argument event listenera gumba za resetiranje forme, poziva funkciju RHF za resetiranje forme i resetira state varijable
 
@@ -81,7 +84,7 @@ U validaciji podataka pomoću Zod-a koristi se nekoliko pomno dizajniranih regul
 - Ukoliko su podaci dohvaćeni, prikazuje se forma
 - Forma je obgrljena <form> tagom i prilikom prilikom klika na submit gumb event listener izvršava onSubmit funkciju
 - Svako polje ima svoj label koji korisniku govori što to polje predstavlja
-- Svako polje je <Controller> komponenta koja ima svoju identifikaciju i registrirano je u control objektu, render argument prikazuje što se treba prikazati na ekranu za to polje forme.
+- Svako polje je <Controller> komponenta koja ima svoju identifikaciju i registrirano je u control objektu, render argument definira što se treba prikazati na ekranu za to polje forme.
 - Ispod svakog polja, ako se dogodi error pri validaciji, korisniku se kondicionalno ispisuje poruka koja služi da mu objasni gdje se dogodila greška i što je krivo upisano
 - Na dnu forme nalaze se dva gumba, gdje je primarni za submit forme, koji radi bez ikakvog dodatnog koda budući da je tipa submit i RHF ga automatski prepoznaje, a drugi je za resetiranje forme
 - Pored gumbova nalazi se indikator statusa forme nakon submita, koji se sastoji od tri kondicionalno renderirana polja u ovisnosti koja state varijabla je trenutno istinita: spinner s porukom koji označava čekanje na odgovor zahtjeva s formom, check i poruka ako je spremanje uspješno, x i poruka ako je spremanje neuspješno
@@ -117,3 +120,7 @@ Budući da se radi o komponenti koja samo ispisuje već postojeće podatke, nije
 - tablica se sastoji od mapiranih globalno definiranih nizova koristeći nativni <table> modul, sa svakim retkom stiliziranim
 - Ispod tablice nalaze se kontrole za paginaciju i prikaz trenutne stranice od ukupnih. Na kontrolama su event listeneri koji kontroliraju koja stranica paginacije se trenutno prikazuje.
 - Također, osim gumbova, moguće je sam upisati broj stranice na koju korisnik želi navigirati, budući da je indikator trenutne stranice ujedno i input polje za upis broja
+
+### Placeholder komponente
+
+Budući da je preduvjet za rad obje komponente asinkrono dohvaćanje vanjskih podataka putem API-ja, moguće je određeno vrijeme dok se komponenta inicijalizira s podacima. Stoga, obje komponente imaju svoje placeholder (skeleton) verzije koje su strukturno odraz svojih pravih verzija, ali umjesto polja forme i ćelija tablice, korištenjem Bootstrap Placeholder komponenti implementiran je loading state koji korisniku daje na uvid dummy verziju komponente kako bi bio upoznat s njenom strukturom dok čeka na inicijalizaciju komponenti. Ovakav pristup nudi bolje korisničko iskustvo i smanjuje subjektivni doživljaj čekanja, posebice za spore komponente koje dohvaćaju veliki broj podataka ili vrše dosta obrade prije prikazivanja. Placeholder komponente također imaju integriranu animaciju sjaja koja korisniku indirektno implicira status učitavanja.
