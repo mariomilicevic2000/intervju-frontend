@@ -86,7 +86,7 @@ const TechnicianList = () => {
     }),
   ];
 
-  // logika za navigaciju paginacije
+  // logika za navigaciju paginacije naprijed i nazad
   const handleNext = () => {
     if (page < totalPages - 1) setPage(page + 1);
   };
@@ -95,14 +95,17 @@ const TechnicianList = () => {
     if (page > 0) setPage(page - 1);
   };
 
+  // sinkronizacija kada se koriste gumbi za paginaciju, sinkronizira input polje
   useEffect(() => {
     setInputValue(page + 1);
   }, [page]);
+
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
   };
 
+  //pri bluru postavlja novu stranicu ako je vrijednost u ispravnom intervalu
   const handleInputBlur = () => {
     const newPage = Number(inputValue) - 1;
     if (!isNaN(newPage) && newPage >= 0 && newPage < totalPages) {
@@ -112,12 +115,15 @@ const TechnicianList = () => {
     }
   };
 
+  // event listener koji omogucava da enter blura polje inputa za paginaciju
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.target.blur();
     }
   };
 
+
+  // loading state skeleton
   if (loading) return <TechnicianListPlaceholder />;
 
   return (
