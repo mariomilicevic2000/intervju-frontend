@@ -17,7 +17,7 @@ Ovaj projekt čini frontend dio tehničkog zadatka za intervju za poziciju Web D
   - provjerava postoje li tehničari u grupi 200,
   - automatski ih prebacuje u grupu 300.
 
-![Dijagram sustava](https://ibb.co/gLCkLx5k)
+![Dijagram sustava](https://res.cloudinary.com/dta8blqe6/image/upload/v1745489202/sys_diagram_cblq8w.png)
 
 ## Tech stack
 
@@ -30,7 +30,7 @@ Frontend stack sastoji se od:
 
 ## Komponente
 
-![Dijagram frontenda](https://ibb.co/Y7k1h1hM)
+![Dijagram frontenda](https://res.cloudinary.com/dta8blqe6/image/upload/v1745489128/front_diagram_uorydt.png)
 
 ### TechnicianForm
 
