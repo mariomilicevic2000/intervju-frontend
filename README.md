@@ -128,3 +128,13 @@ Budući da se radi o komponenti koja samo ispisuje već postojeće podatke, nije
 ### Placeholder komponente
 
 Budući da je preduvjet za rad obje komponente asinkrono dohvaćanje vanjskih podataka putem API-ja, moguće je određeno vrijeme dok se komponenta inicijalizira s podacima. Stoga, obje komponente imaju svoje placeholder (skeleton) verzije koje su strukturno odraz svojih pravih verzija, ali umjesto polja forme i ćelija tablice, korištenjem Bootstrap Placeholder komponenti implementiran je loading state koji korisniku daje na uvid dummy verziju komponente kako bi bio upoznat s njenom strukturom dok čeka na inicijalizaciju komponenti. Ovakav pristup nudi bolje korisničko iskustvo i smanjuje subjektivni doživljaj čekanja, posebice za spore komponente koje dohvaćaju veliki broj podataka ili vrše dosta obrade prije prikazivanja. Placeholder komponente također imaju integriranu animaciju sjaja koja korisniku indirektno implicira status učitavanja.
+
+### Moguća poboljšanja
+
+- Više kontrola paginacije (korisnik bira veličinu stranice)
+- Asinkrona validacija maila budući da je i on svojstven svakom tehničaru kao i KP broj
+- Loading state koji dijeli više CSS-a sa pravom komponentom da se smanji layout shift
+- Bolja responzivnost
+- Normalizacija mobilnog telefona prije slanja
+- Potencijalna normalizacija KP broja prije slanja
+- Umjesto samo loading statea, kada je dohvaćanje podataka neuspješno, radi se revalidacija na fiksnom intervalu da korisnik ne mora sam refreshati stranicu
