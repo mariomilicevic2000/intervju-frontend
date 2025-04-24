@@ -17,6 +17,8 @@ Ovaj projekt čini frontend dio tehničkog zadatka za intervju za poziciju Web D
   - provjerava postoje li tehničari u grupi 200,
   - automatski ih prebacuje u grupu 300.
 
+![Dijagram sustava]([text](https://ibb.co/gLCkLx5k))
+
 ## Tech stack
 
 Frontend stack sastoji se od:
@@ -27,6 +29,8 @@ Frontend stack sastoji se od:
 - React Hook Form - Koristi nekontrolirane komponente za bolju performanse (manje rerendera) i nudi jednostavan API za validaciju (može se integrirati sa Zod-om za type-safe validaciju), upravljanje stanjem forme i slanje podataka. Smanjuje boilerplate kod potreban za ručno upravljanje stanjem svakog input polja.
 
 ## Komponente
+
+![Dijagram frontenda]([text](https://ibb.co/Y7k1h1hM))
 
 ### TechnicianForm
 
