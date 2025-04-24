@@ -93,12 +93,13 @@ export default function TechnicianForm() {
   // dinamicki generirana schema
   const schema = buildTechnicianSchema(groupManagers);
 
+  // React Hook Form hook
   const { control, handleSubmit, formState: { errors }, setError, clearErrors, setValue, watch, reset } = useForm({
     resolver: zodResolver(schema),
     defaultValues: defaultTechnicianValues
   });
 
-  // dohvacanje managera da bi se moglo populirati dropdown za postojece grupe
+  // dohvacanje managera da bi se moglo populirati dropdown za postojece grupe i voditelje
   useEffect(() => {
     fetch('http://localhost:8080/api/admin/groupmanagers')
       .then(res => res.json())
@@ -115,7 +116,7 @@ export default function TechnicianForm() {
     setKpExists(false);
   }
 
-
+  // prati promjenu vrijednosti polja forme za odabir grupe
   const groupId = Number(watch("groupId"));
 
   // logika koja na temelju izabrane grupe mijenja readonly polje za managera
