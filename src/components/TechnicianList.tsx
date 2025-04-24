@@ -48,7 +48,7 @@ const TechnicianList = () => {
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [inputValue, setInputValue] = useState<number>(page + 1);
-  const size : number = 5;
+  const size: number = 5;
 
   // paginacija
   useEffect(() => {
@@ -125,11 +125,22 @@ const TechnicianList = () => {
       {/* tablica generirana nizovima definiranima gore */}
       <h2 className="text-xl font-bold mb-4">Popis tehničara</h2>
       <div className="table-responsive" style={{ minHeight: '600px' }}>
-        <table className="table table-striped table-hover">
+        <table className="table table-striped table-hover" style={{ tableLayout: "fixed", width: "100%" }}>
           <thead className="table-dark">
             <tr>
-              {headers.map((header) => (
-                <th key={header} className="border px-2 py-1">
+              {headers.map((header, idx) => (
+                <th key={header} className="border px-2 py-1 text-nowrap" style={{
+                  width: [
+                    "100px", // KP broj
+                    "120px", // Ime
+                    "120px", // Prezime
+                    "80px",  // Grupa
+                    "140px", // Voditelj
+                    "140px", // Mobitel
+                    "200px", // Email
+                    "280px", // Adresa rada
+                  ][idx]
+                }}>
                   {header}
                 </th>
               ))}
@@ -139,7 +150,7 @@ const TechnicianList = () => {
             {techniciansWithEmptyRows.map((tech, index) => (
               <tr key={tech.kpNumber || `empty-row-${index}`}>
                 {getTechValues(tech).map((val, i) => (
-                  <td key={i} className="border px-2 py-1">
+                  <td key={i} title={val} className="border px-2 py-1 text-truncate" style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                     {val}
                   </td>
                 ))}
