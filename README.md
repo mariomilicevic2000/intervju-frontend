@@ -84,11 +84,11 @@ U validaciji podataka pomoću Zod-a koristi se nekoliko pomno dizajniranih regul
 
 #### Prezentacijski dio forme
 
-- Ukoliko grupe i voditelji nisu još dohvaćeni, umjesto forme se prikazuje
+- Ukoliko grupe i voditelji nisu još dohvaćeni, umjesto forme se prikazuje loading state skeleton
 - Ukoliko su podaci dohvaćeni, prikazuje se forma
-- Forma je obgrljena <form> tagom i prilikom prilikom klika na submit gumb event listener izvršava onSubmit funkciju
+- Forma je obgrljena form tagom i prilikom prilikom klika na submit gumb event listener izvršava onSubmit funkciju
 - Svako polje ima svoj label koji korisniku govori što to polje predstavlja
-- Svako polje je <Controller> komponenta koja ima svoju identifikaciju i registrirano je u control objektu, render argument definira što se treba prikazati na ekranu za to polje forme.
+- Svako polje je Controller komponenta koja ima svoju identifikaciju i registrirano je u control objektu, render argument definira što se treba prikazati na ekranu za to polje forme.
 - Ispod svakog polja, ako se dogodi error pri validaciji, korisniku se kondicionalno ispisuje poruka koja služi da mu objasni gdje se dogodila greška i što je krivo upisano
 - Na dnu forme nalaze se dva gumba, gdje je primarni za submit forme, koji radi bez ikakvog dodatnog koda budući da je tipa submit i RHF ga automatski prepoznaje, a drugi je za resetiranje forme
 - Pored gumbova nalazi se indikator statusa forme nakon submita, koji se sastoji od tri kondicionalno renderirana polja u ovisnosti koja state varijabla je trenutno istinita: spinner s porukom koji označava čekanje na odgovor zahtjeva s formom, check i poruka ako je spremanje uspješno, x i poruka ako je spremanje neuspješno
@@ -138,3 +138,5 @@ Budući da je preduvjet za rad obje komponente asinkrono dohvaćanje vanjskih po
 - Normalizacija mobilnog telefona prije slanja
 - Potencijalna normalizacija KP broja prije slanja
 - Umjesto samo loading statea, kada je dohvaćanje podataka neuspješno, radi se revalidacija na fiksnom intervalu da korisnik ne mora sam refreshati stranicu
+- Isključiti mogućnosti autofilla budući da su podaci po svojoj naravi uvijek drugačiji (ostavljeno zbog lakšeg testiranja)
+- Zrelija implementacija tablice i nadogradnja mogućnosti (sortiranje, filtriranje) koristeći primjerice Tanstack Table
